@@ -31,3 +31,9 @@ execute the command:
 and the filtered list will be converted to human readable HTML.
 
 Loading that HTML into a word document will allow the user to make notes regarding preferences.
+
+### update
+
+actually don't bother with csv2html, just run the main HTML thing on the full jobs bank and filter / sort as you like on page.
+
+click the checkbox on page to mark the ones you want to reread or follow up on.
