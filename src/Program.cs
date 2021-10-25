@@ -12,6 +12,7 @@ namespace netflix_jobs_api_scraper
         public static string FILENAME_CSV = "./data/jobs.txt";
         public static string FILENAME_HTML = "./data/jobs.html";
         public static string FILENAME_CSV_TO_HTML = "./data/filtered-jobs.html";
+        public static string FILENAME_REQUIREMENTS = "./data/requirements.txt";
 
         static async Task Main(string[] args)
         {
@@ -29,6 +30,9 @@ namespace netflix_jobs_api_scraper
             }
             if (args.Contains("csv2html")) {
                 await new JobsTextToHtmlWriter().WriteAsync();
+            }
+            if (args.Contains("req")) {
+                await new RequirementsWriter().WriteAsync();
             }
         }
     }

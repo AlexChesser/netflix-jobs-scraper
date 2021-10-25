@@ -15,8 +15,7 @@ namespace netflix_jobs_api_scraper
             using(TextWriter tr = new StreamWriter(Program.FILENAME_CSV)){
                 string joiner = "\t";
                 await tr.WriteLineAsync(string.Join(joiner, Posting.Header));
-                var jobPages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JobsModel>>(await File.ReadAllTextAsync(Program.FILENAME_JSON));
-                foreach (var jobsPage in jobPages)
+                foreach (var jobsPage in await JobsModel.LoadJobs())
                 {
                     foreach (var posting in jobsPage.records.postings)
                     {

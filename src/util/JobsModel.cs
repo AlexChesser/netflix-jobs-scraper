@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 
 namespace netflix_jobs_api_scraper
 {
-
     public class JobsModel
     {
         public int record_count { get; set; }
         public Records records { get; set; }
         public Info info { get; set; }
         public Errors errors { get; set; }
+
+        public static async Task<List<JobsModel>> LoadJobs() => JsonConvert.DeserializeObject<List<JobsModel>>(await File.ReadAllTextAsync(Program.FILENAME_JSON));
     }
 
     public class Records

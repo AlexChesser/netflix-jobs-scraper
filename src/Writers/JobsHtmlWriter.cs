@@ -14,9 +14,8 @@ namespace netflix_jobs_api_scraper
         {
             using (TextWriter tw = new StreamWriter(Program.FILENAME_HTML))
             {
-                var jobPages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JobsModel>>(await File.ReadAllTextAsync(Program.FILENAME_JSON));
                 List<string[]> postings = new List<string[]>();
-                foreach (var jobsPage in jobPages)
+                foreach (var jobsPage in await JobsModel.LoadJobs())
                 {
                     foreach (var posting in jobsPage.records.postings)
                     {
