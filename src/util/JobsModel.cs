@@ -16,6 +16,19 @@ namespace netflix_jobs_api_scraper
         public Errors errors { get; set; }
 
         public static async Task<List<JobsModel>> LoadJobs() => JsonConvert.DeserializeObject<List<JobsModel>>(await File.ReadAllTextAsync(Program.FILENAME_JSON));
+        public static Dictionary<string, Posting> MapJobs(List<JobsModel> jobs)
+        {
+            var postmap = new Dictionary<string, Posting>();
+            foreach (var j in jobs)
+            {
+                foreach (var p in j.records.postings)
+                {
+                    postmap.Add(p.id, p);
+                }
+            }
+            return postmap;
+        }
+
     }
 
     public class Records
@@ -32,6 +45,7 @@ namespace netflix_jobs_api_scraper
                 return new string[] {
                     "external_id",
                     "days old",
+                    "status",
                     "text",
                     "location",
                     "organization",
@@ -42,16 +56,18 @@ namespace netflix_jobs_api_scraper
             }
         }
 
-        private string JoinIf(string[] data, string prepend = ""){
+        private string JoinIf(string[] data, string prepend = "")
+        {
             string output = data == null ? "" : string.Join("|", data);
             return output.Length > 0 ? $"{prepend}{output}" : "";
         }
 
         public string[] ToArray()
-        {   
+        {
             return new string[] {
                 $@"""<a href='https://jobs.netflix.com/jobs/{external_id}'>{external_id}</a>""",
                 $@"""{(int)(DateTime.Now - created_at).TotalDays}""",
+                $@"""{Status}""",
                 $@"""{text}""",
                 $@"""{location}{JoinIf(alternate_locations, "|")}""",
                 $@"""{JoinIf(organization)}""",
@@ -61,6 +77,7 @@ namespace netflix_jobs_api_scraper
             };
         }
 
+        public string Status { get; set; }
         public string text { get; set; }
         public string lever_id { get; set; }
         public string[] team { get; set; }

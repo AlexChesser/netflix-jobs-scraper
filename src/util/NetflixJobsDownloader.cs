@@ -30,8 +30,27 @@ namespace netflix_jobs_api_scraper
             }
         }
 
+        private void FlagNewAndRemoved(List<JobsModel> jobs, Dictionary<string, Posting> PreviousDownload){
+            foreach(var j in jobs){
+                foreach(var p in j.records.postings){
+                    if(PreviousDownload.ContainsKey(p.id)){
+                        PreviousDownload.Remove(p.id);
+                    } else {
+                        p.Status = "New";
+                    }
+                }
+            }
+            foreach(var kvp in PreviousDownload){
+                kvp.Value.Status = "Deleted";
+                jobs[0].records.postings.Add(kvp.Value);
+            }
+        }
+
         public async Task Run()
         {
+            var OldJobs = await JobsModel.LoadJobs();
+            var PreviousDownload = JobsModel.MapJobs(OldJobs);
+            var NewIDs = new HashSet<string>();
             using (var fs = File.CreateText(Program.FILENAME_JSON))
             {
                 var AllJobs = new List<JobsModel>();
@@ -43,8 +62,10 @@ namespace netflix_jobs_api_scraper
                     Console.WriteLine($"adding page {i}");
                     AllJobs.Add(await GetJobs(i));
                 }
+                FlagNewAndRemoved(AllJobs, PreviousDownload);
                 await fs.WriteAsync(JsonConvert.SerializeObject(AllJobs));
             }
+
         }
     }
 }

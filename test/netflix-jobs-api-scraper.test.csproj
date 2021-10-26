@@ -18,4 +18,10 @@
     <ProjectReference Include="..\src\netflix-jobs-api-scraper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="data/download-jobs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
