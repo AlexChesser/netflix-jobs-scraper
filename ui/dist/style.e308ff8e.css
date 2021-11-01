@@ -1,0 +1,19 @@
+body {
+  background-color: #81a69b;
+  margin: 0;
+}
+
+.jobs-table table tr {
+  vertical-align: top;
+  background-color: blanchedalmond;
+}
+.jobs-table table tr:nth-child(even) {
+  background-color: floralwhite;
+}
+.jobs-table table tr td {
+  vertical-align: top;
+  border: 1px solid black;
+}
+
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
