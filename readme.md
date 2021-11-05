@@ -2,6 +2,13 @@
 
 browsing the default netflix jobs site for new SSE roles is a pain. This quick little script allows for a full search of Senior Software Engineer roles to be downloaded locally and searched for roles that are a good fit.
 
+## don't hate me because I'm beautiful
+
+Yes, this is ugly. sorry. I just wanted to get somethign onto a github page so I could browse when I'm not at my primary computer.
+
+https://alexchesser.github.io/netflix-jobs-scraper/
+
+
 ## usage:
 
 download all jobs to store them locally (don't overuse to prevent getting deny listed)
